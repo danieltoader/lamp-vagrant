@@ -1,0 +1,15 @@
+# Config virtual machine info
+machine_name : &machine_name    'LAMP Vagrant'
+local_domain : &local_domain    'lamp-vagrant.local'
+private_ip   : &private_ip      '192.168.33.33'
+machine_ram  : &machine_ram     'auto'
+machine_cpu  : &machine_cpu     'auto'
+
+# Config Synced folders
+syncDir :
+  - host:  www
+    guest: /var/www/html
+    owner: vagrant
+    group: www-data
+    dmode: 775
+    fmode: 775
