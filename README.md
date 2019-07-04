@@ -6,7 +6,7 @@ Composer is available for easy package management.
 ##### Table of Contents  
 - [Prerequisites](https://github.com/danieltoader/lamp-vagrant#prerequisites)  
 - [What is included?](https://github.com/danieltoader/lamp-vagrant#what-is-included)
-- [Quick Start](https://github.com/danieltoader/lamp-vagrant#quick-start-checkered_flag)
+- [Quick Start](https://github.com/danieltoader/lamp-vagrant#quick-start)
 - [Configuration](https://github.com/danieltoader/lamp-vagrant#fast-configuration)
 - [Others](https://github.com/danieltoader/lamp-vagrant#others)
 
