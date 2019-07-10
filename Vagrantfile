@@ -103,5 +103,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |srv|
     end
 
     # Provisioning script
-    srv.vm.provision "shell", path: "provision.sh", privileged: false
+    srv.vm.provision "shell", path: "provision.sh", privileged: false, args:  "-a" + configs["mysql_root_pass"].to_s + " -b" + configs["mysql_user"].to_s+ " -c" + configs["mysql_user_pass"].to_s+ " -d" + configs["mysql_user_db"].to_s
 end

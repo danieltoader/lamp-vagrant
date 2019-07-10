@@ -1,9 +1,14 @@
 # Config virtual machine info
-machine_name : &machine_name    'LAMP Vagrant'
-local_domain : &local_domain    'lamp-vagrant.local'
-private_ip   : &private_ip      '192.168.33.33'
-machine_ram  : &machine_ram     'auto'
-machine_cpu  : &machine_cpu     'auto'
+machine_name : 'LAMP Vagrant'
+local_domain : 'lamp-vagrant.local'
+private_ip   : '192.168.33.33'
+machine_ram  : 'auto'
+machine_cpu  : 'auto'
+
+mysql_root_pass : 'root'
+mysql_user      : 'lamp'
+mysql_user_pass : 'lamp'
+mysql_user_db   : 'lamp'
 
 # Config Synced folders
 syncDir :

@@ -1,7 +1,23 @@
 #!/usr/bin/env bash
 
-# Variables
-MYSQL_PASS="root"
+# Default variable values
+mysql_root_pass="root"
+mysql_user="lamp"
+mysql_user_pass="lamp"
+mysql_user_db="lamp"
+
+while getopts ":a:b:c:d:" opt; do
+    case "${opt}" in
+        a)
+            mysql_root_pass="$OPTARG" ;;
+        b)
+            mysql_user="$OPTARG" ;;
+        c)
+            mysql_user_pass="$OPTARG" ;;
+        d)
+            mysql_user_db="$OPTARG" ;;
+    esac
+done
 
 # Set timezone to your timezone
 sudo unlink /etc/localtime
@@ -64,14 +80,36 @@ echo "deb http://repo.mysql.com/apt/debian/ stretch mysql-5.7" | sudo tee /etc/a
 echo "-- Updating package lists after adding MySQL repo --"
 sudo aptitude update -y >> /vagrant/build.log 2>&1
 
-sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass password $MYSQL_PASS"
-sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password $MYSQL_PASS"
+# Set mysql paramaters for install
+sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass password $mysql_root_pass"
+sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password $mysql_root_pass"
+
+# Set phpmyadmin paramaters for install
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean false"
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
+sudo debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-user string root'
+sudo debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/admin-pass password $mysql_root_pass'
+sudo debconf-set-selections <<< 'phpmyadmin phpmyadmin/mysql/app-pass password $mysql_root_pass'
+sudo debconf-set-selections <<< 'phpmyadmin phpmyadmin/app-password-confirm password $mysql_root_pass'
+sudo debconf-set-selections <<< 'phpmyadmin phpmyadmin/database-type select mysql'
+sudo debconf-set-selections <<< 'phpmyadmin phpmyadmin/setup-password password $mysql_root_pass'
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/internal/skip-preseed boolean true"
 
 echo "-- Installing MySQL server --"
 sudo aptitude install -y mysql-server >> /vagrant/build.log 2>&1
 
 echo "-- Creating alias for quick access to the MySQL (just type: db) --"
-echo "alias db='mysql -u root -p$MYSQL_PASS'" >> /home/vagrant/.bashrc
+echo "alias db='mysql -u root -p$mysql_root_pass'" >> /home/vagrant/.bashrc
+
+echo "-- Installing phpmyadmin --"
+sudo aptitude install -q -y -f phpmyadmin >> /vagrant/build.log 2>&1
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf >> /vagrant/build.log 2>&1
+sudo a2enconf phpmyadmin.conf >> /vagrant/build.log 2>&1
+
+echo "-- Create mysql user and database --"
+sudo mysql -u root -p$mysql_root_pass -e "CREATE DATABASE IF NOT EXISTS $mysql_user_db;" >> /vagrant/build.log 2>&1
+sudo mysql -u root -p$mysql_root_pass -e "GRANT ALL PRIVILEGES ON $mysql_user_db.* TO '$mysql_user'@'%' IDENTIFIED BY '$mysql_user_pass';" >> /vagrant/build.log 2>&1
+sudo mysql -u root -p$mysql_root_pass -e "FLUSH PRIVILEGES;" >> /vagrant/build.log 2>&1
 
 echo "-- Installing PHP stuff --"
 sudo aptitude install -y libapache2-mod-php7.3 php7.3 php7.3-dev php7.3-pdo php7.3-mysql php7.3-mbstring php7.3-xml php7.3-intl php7.3-tokenizer php7.3-gd php7.3-imagick php7.3-curl php7.3-zip >> /vagrant/build.log 2>&1
