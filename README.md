@@ -27,6 +27,7 @@ You'll need to have the following prerequisites **installed** on your workstatio
  * **Apache 2.4**
  * **MySQL 5.7**
  * **PHP 7.3**
+ * **PhpMyAdmin**
  * Composer
  * Git
  * Curl
@@ -86,11 +87,17 @@ _Linux only_ use this command line to add the rule:
 For fast configuration you can modify this variables in ```config.yml``` file.
 
 ```ỳaml
-machine_name : &machine_name    'LAMP Vagrant'
-local_domain : &local_domain    'lamp-vagrant.local'
-private_ip   : &private_ip      '192.168.33.33'
-machine_ram  : &machine_ram     'auto'
-machine_cpu  : &machine_cpu     'auto'
+# Config virtual machine info
+machine_name : 'LAMP Vagrant'
+local_domain : 'lamp-vagrant.local'
+private_ip   : '192.168.33.33'
+machine_ram  : 'auto'
+machine_cpu  : 'auto'
+
+mysql_root_pass : 'root'
+mysql_user      : 'lamp'
+mysql_user_pass : 'lamp'
+mysql_user_db   : 'lamp'
 
 syncDir      :
     - host   : share
@@ -103,6 +110,11 @@ syncDir      :
       dmode  : 775
       fmode  : 775
 ```
+#### MySQL
+An user and a database will be created from config.yaml (mysql_user, mysql_user_pass, mysql_user_db), the user will have all privileges on the defined database
+
+#### PhpMyAdmin
+To connect to PhpMyAdmin access `{private_ip}/phpmyadmin` and use the mysql_user and mysql_user_pass to login.
 
 ## Others
 ##### Notice
