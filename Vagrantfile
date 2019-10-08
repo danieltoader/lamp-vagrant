@@ -25,6 +25,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |srv|
             "vagrant plugin install vagrant-vbguest"
     end
 
+    # Load custom vbguest installer
+    if defined?(VagrantVbguest::Installers::Debian)
+        # Temporary fix by @djomlastic (https://github.com/djomlastic) for kernel update
+        require_relative 'utility/vbg-installer'
+        srv.vbguest.installer = Utility::DebianCustom
+    end
+
 	# Network
 	# Create a private network, which allows host-only access to the machine using a specific IP.
 	srv.vm.network "private_network", ip: configs['private_ip']
