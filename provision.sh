@@ -132,6 +132,11 @@ display_errors = on
 END
 sudo ln -s /etc/php/7.3/mods-available/custom.ini /etc/php/7.3/apache2/conf.d/00-custom.ini  >> /vagrant/build.log 2>&1
 
+echo "-- Installing PHPUnit --"
+sudo wget https://phar.phpunit.de/phpunit.phar
+sudo chmod +x phpunit.phar
+sudo mv phpunit.phar /usr/bin/phpunit
+
 echo "-- Restarting Apache --"
 sudo /etc/init.d/apache2 restart >> /vagrant/build.log 2>&1
 
