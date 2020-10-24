@@ -107,13 +107,13 @@ sudo mysql -u root -p$mysql_root_pass -e "GRANT ALL PRIVILEGES ON $mysql_user_db
 sudo mysql -u root -p$mysql_root_pass -e "FLUSH PRIVILEGES;" >> /vagrant/build.log 2>&1
 
 echo "-- Installing PHP stuff --"
-sudo aptitude install -y libapache2-mod-php7.3 php7.3 php7.3-dev php7.3-pdo php7.3-mysql php7.3-mbstring php7.3-xml php7.3-intl php7.3-tokenizer php7.3-gd php7.3-imagick php7.3-curl php7.3-zip >> /vagrant/build.log 2>&1
+sudo aptitude install -y libapache2-mod-php7.4 php7.4 php7.4-dev php7.4-pdo php7.4-mysql php7.4-mbstring php7.4-xml php7.4-intl php7.4-tokenizer php7.4-gd php7.4-imagick php7.4-curl php7.4-zip >> /vagrant/build.log 2>&1
 
 echo "-- Installing Xdebug --"
 sudo aptitude install -y php-xdebug >> /vagrant/build.log 2>&1
 
 echo "-- Configuring xDebug (idekey = PHP_STORM) --"
-sudo tee -a /etc/php/7.3/mods-available/xdebug.ini << END
+sudo tee -a /etc/php/7.4/mods-available/xdebug.ini << END
 xdebug.remote_enable=1
 xdebug.remote_connect_back=1
 xdebug.remote_port=9001
@@ -121,11 +121,11 @@ xdebug.idekey=PHP_STORM
 END
 
 echo "-- Custom configure for PHP --"
-sudo tee -a /etc/php/7.3/mods-available/custom.ini << END
+sudo tee -a /etc/php/7.4/mods-available/custom.ini << END
 error_reporting = E_ALL
 display_errors = on
 END
-sudo ln -s /etc/php/7.3/mods-available/custom.ini /etc/php/7.3/apache2/conf.d/00-custom.ini  >> /vagrant/build.log 2>&1
+sudo ln -s /etc/php/7.4/mods-available/custom.ini /etc/php/7.4/apache2/conf.d/00-custom.ini  >> /vagrant/build.log 2>&1
 
 echo "-- Installing phpmyadmin --"
 sudo aptitude install -q -y -f phpmyadmin >> /vagrant/build.log 2>&1
