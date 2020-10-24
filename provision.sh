@@ -101,11 +101,6 @@ sudo aptitude install -y mysql-server >> /vagrant/build.log 2>&1
 echo "-- Creating alias for quick access to the MySQL (just type: db) --"
 echo "alias db='mysql -u root -p$mysql_root_pass'" >> /home/vagrant/.bashrc
 
-echo "-- Installing phpmyadmin --"
-sudo aptitude install -q -y -f phpmyadmin >> /vagrant/build.log 2>&1
-sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf >> /vagrant/build.log 2>&1
-sudo a2enconf phpmyadmin.conf >> /vagrant/build.log 2>&1
-
 echo "-- Create mysql user and database --"
 sudo mysql -u root -p$mysql_root_pass -e "CREATE DATABASE IF NOT EXISTS $mysql_user_db;" >> /vagrant/build.log 2>&1
 sudo mysql -u root -p$mysql_root_pass -e "GRANT ALL PRIVILEGES ON $mysql_user_db.* TO '$mysql_user'@'%' IDENTIFIED BY '$mysql_user_pass';" >> /vagrant/build.log 2>&1
@@ -131,6 +126,11 @@ error_reporting = E_ALL
 display_errors = on
 END
 sudo ln -s /etc/php/7.3/mods-available/custom.ini /etc/php/7.3/apache2/conf.d/00-custom.ini  >> /vagrant/build.log 2>&1
+
+echo "-- Installing phpmyadmin --"
+sudo aptitude install -q -y -f phpmyadmin >> /vagrant/build.log 2>&1
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf >> /vagrant/build.log 2>&1
+sudo a2enconf phpmyadmin.conf >> /vagrant/build.log 2>&1
 
 echo "-- Installing PHPUnit --"
 sudo wget https://phar.phpunit.de/phpunit.phar
