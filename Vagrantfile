@@ -14,7 +14,7 @@ configs = YAML.load_file("#{dir}/config.yaml")
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |srv|
-    srv.vm.box = "debian/stretch64"
+    srv.vm.box = "debian/buster64"
 	srv.vm.hostname = configs['local_domain']
 
     if Vagrant.has_plugin? 'vagrant-vbguest'

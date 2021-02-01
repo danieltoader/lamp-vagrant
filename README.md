@@ -1,6 +1,6 @@
 # LAMP for Vagrant
 Complete Vagrant LAMP setup for development environment. Start developing in less than 5 minutes.
-Development stack is based on Debian 9 (Stretch) with Apache 2.4, PHP 7.3 and MySQL 5.7. 
+Development stack is based on Debian 10 (Buster) with Apache 2.4, PHP 7.4 and MySQL 5.7. 
 Composer is available for easy package management.
 
 ##### Table of Contents  
@@ -23,27 +23,27 @@ You'll need to have the following prerequisites **installed** on your workstatio
     ```
 
 ## What is included?
- * **Debian 9** (Stretch)
+ * **Debian 10** (Buster)
  * **Apache 2.4**
  * **MySQL 5.7**
- * **PHP 7.3**
+ * **PHP 7.4**
  * **PhpMyAdmin**
  * Composer
  * Git
  * Curl
  
 ##### Included PHP packages
-  * php7.3-intl 
-  * php7.3-pdo 
-  * php7.3-zip
-  * php7.3-curl 
-  * php7.3-mysql 
-  * php7.3-mbstring 
-  * php7.3-xml
-  * php7.3-tokenizer 
-  * php7.3-gd
-  * php7.3-imagick
-  * php7.3-dev 
+  * php7.4-intl 
+  * php7.4-pdo 
+  * php7.4-zip
+  * php7.4-curl 
+  * php7.4-mysql 
+  * php7.4-mbstring 
+  * php7.4-xml
+  * php7.4-tokenizer 
+  * php7.4-gd
+  * php7.4-imagick
+  * php7.4-dev 
   * php-xdebug
 
 ## Quick Start
@@ -124,8 +124,8 @@ As a consequence, you may mess up with the VM, do heavy testing, install new app
 
 ##### Install latest vagrant on Linux (Ubuntu/Debian)
 ```bash
-wget -c https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.deb
-sudo dpkg -i vagrant_2.2.5_x86_64.deb
+wget -c https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_x86_64.deb
+sudo dpkg -i vagrant_2.2.14_x86_64.deb
 ```
 ##### For ssh access type
 ```bash
