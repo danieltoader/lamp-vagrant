@@ -65,7 +65,7 @@ $ cd /path/to/project/root/directory
 $ vagrant up
 ```
 
-Once the process is finished you can place your application in the ```www``` folder and access it using the ip 192.168.33.33.
+Once the process is finished you can place your application in the ```www``` folder and access it using the ip 192.168.90.10.
 
 **Optional:**
 You can access your application with an address name (http://vagrant.local) instead of an IP by adding the line below to your host file
@@ -79,18 +79,19 @@ Hosts file path on:
 _Linux only_ use this command line to add the rule:
 
  ```bash
- $ echo "\n192.168.33.33    lamp-vagrant.local" | sudo tee -a /etc/hosts
+ $ echo "\n192.168.90.10    lamp-vagrant.local" | sudo tee -a /etc/hosts
  ```
 
 ## Configuration
 
-For fast configuration you can modify this variables in ```config.yml``` file.
+To configure your VM, you need to create a ```config.yml``` file. 
+You can use ```config-sample.yml``` as a template. For fast configuration you can rename the file to ```config.yml``` and change the variables in it.
 
 ```ỳaml
 # Config virtual machine info
 machine_name : 'LAMP Vagrant'
 local_domain : 'lamp-vagrant.local'
-private_ip   : '192.168.33.33'
+private_ip   : '192.168.90.10'
 machine_ram  : 'auto'
 machine_cpu  : 'auto'
 
@@ -111,21 +112,21 @@ syncDir      :
       fmode  : 775
 ```
 #### MySQL
-An user and a database will be created from config.yaml (mysql_user, mysql_user_pass, mysql_user_db), the user will have all privileges on the defined database
+A user and a database will be created from config.yaml (mysql_user, mysql_user_pass, mysql_user_db), the user will have all privileges on the defined database
 
 #### PhpMyAdmin
-To connect to PhpMyAdmin access `{private_ip}/phpmyadmin` and use the mysql_user and mysql_user_pass to login.
+To connect to PhpMyAdmin access `{private_ip}/phpmyadmin` and use the mysql_user and mysql_user_pass to log in.
 
 ## Others
 ##### Notice
-You must understand that the VM is meant to be disposable, it is not supposed to be persistent. Any persistent data **should remain on your host computer**, do not apply changes to the VM nor store data or documents that you don't want to loose. 
+You must understand that the VM is meant to be disposable, it is not supposed to be persistent. Any persistent data **should remain on your host computer**, do not apply changes to the VM nor store data or documents that you don't want to lose. 
 
 As a consequence, you may mess up with the VM, do heavy testing, install new apps to evaluate them and even crash it. If you need to rollback, just destroy it and recreate it as pure as the driven snow but with all your data (sources, databases and configuration intact). It is as simple as a `vagrant destroy && vagrant up`.
 
 ##### Install latest vagrant on Linux (Ubuntu/Debian)
 ```bash
-wget -c https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_x86_64.deb
-sudo dpkg -i vagrant_2.2.14_x86_64.deb
+wget -c https://releases.hashicorp.com/vagrant/2.2.18/vagrant_2.2.18_x86_64.deb
+sudo dpkg -i vagrant_2.2.18_x86_64.deb
 ```
 ##### For ssh access type
 ```bash

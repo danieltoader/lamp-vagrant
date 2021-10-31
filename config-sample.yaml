@@ -1,7 +1,7 @@
 # Config virtual machine info
 machine_name : 'LAMP Vagrant'
 local_domain : 'lamp-vagrant.local'
-private_ip   : '192.168.33.33'
+private_ip   : '192.168.90.10'
 machine_ram  : 'auto'
 machine_cpu  : 'auto'
 
