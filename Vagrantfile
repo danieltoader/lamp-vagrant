@@ -15,6 +15,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |srv|
     srv.vm.box = "debian/buster64"
+    #srv.vm.box_version = "10.20210829.1"
 	srv.vm.hostname = configs['local_domain']
 
     if Vagrant.has_plugin? 'vagrant-vbguest'
@@ -47,28 +48,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |srv|
 
     # Shared folder
     # Set share folder permissions to 777 so that apache can write files
-
-    if configs["syncDir"]
-        configs['syncDir'].each do |syncDir|
-            if syncDir["owner"] && syncDir["group"]
-                srv.vm.synced_folder syncDir["host"],
-                syncDir["guest"],
-                owner: "#{syncDir["owner"]}",
-                group: "#{syncDir["group"]}",
-                mount_options:["dmode=#{syncDir["dmode"]}",
-                "fmode=#{syncDir["fmode"]}"],
-                create: true
-            else
-                srv.vm.synced_folder syncDir['host'],
-                syncDir['guest'],
-                create: true
+	if ENV['FIRST_RUN'] == 'true'
+		srv.vbguest.auto_update = false
+	else
+        if configs["syncDir"]
+            configs['syncDir'].each do |syncDir|
+                if syncDir["owner"] && syncDir["group"]
+                    srv.vm.synced_folder syncDir["host"],
+                    syncDir["guest"],
+                    owner: "#{syncDir["owner"]}",
+                    group: "#{syncDir["group"]}",
+                    mount_options:["dmode=#{syncDir["dmode"]}",
+                    "fmode=#{syncDir["fmode"]}"],
+                    create: true
+                else
+                    srv.vm.synced_folder syncDir['host'],
+                    syncDir['guest'],
+                    create: true
+                end
             end
+        else
+            raise Vagrant::Errors::VagrantError.new,
+                "At least one synced_folder must be defined. Use default if you do not need something special"
         end
-    else
-        raise Vagrant::Errors::VagrantError.new,
-            "At least one synced_folder must be defined. Use default if you do not need something special"
-    end
-
+	end
     # Virtual box settings
     # Provider-specific configuration so you can fine-tune VirtualBox for Vagrant.
     # These expose provider-specific options.
