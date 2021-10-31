@@ -128,9 +128,78 @@ END
 sudo ln -s /etc/php/7.4/mods-available/custom.ini /etc/php/7.4/apache2/conf.d/00-custom.ini  >> /vagrant/build.log 2>&1
 
 echo "-- Installing phpmyadmin --"
-sudo aptitude install -q -y -f phpmyadmin >> /vagrant/build.log 2>&1
-sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf >> /vagrant/build.log 2>&1
+DATA="$(sudo wget https://www.phpmyadmin.net/home_page/version.txt -q -O-)"
+URL="$(echo $DATA | cut -d ' ' -f 3)"
+VERSION="$(echo $DATA | cut -d ' ' -f 1)"
+sudo wget https://files.phpmyadmin.net/phpMyAdmin/${VERSION}/phpMyAdmin-${VERSION}-english.tar.gz
+sudo tar xvf phpMyAdmin-${VERSION}-english.tar.gz
+sudo mv phpMyAdmin-*/ /usr/share/phpmyadmin
+sudo mkdir -p /usr/share/phpmyadmin/tmp
+sudo chown -R www-data:www-data /usr/share/phpmyadmin/tmp
+sudo chown -R www-data:www-data /var/lib/phpmyadmin
+sudo mkdir /etc/phpmyadmin/
+sudo cp /usr/share/phpmyadmin/config.sample.inc.php  /usr/share/phpmyadmin/config.inc.php
+sudo tee -a /etc/apache2/conf-available/phpmyadmin.conf << END
+Alias /phpmyadmin /usr/share/phpmyadmin
+
+<Directory /usr/share/phpmyadmin>
+    Options SymLinksIfOwnerMatch
+    DirectoryIndex index.php
+
+    <IfModule mod_php5.c>
+        <IfModule mod_mime.c>
+            AddType application/x-httpd-php .php
+        </IfModule>
+        <FilesMatch ".+\.php$">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+        php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+        php_admin_value mbstring.func_overload 0
+    </IfModule>
+    <IfModule mod_php.c>
+        <IfModule mod_mime.c>
+            AddType application/x-httpd-php .php
+        </IfModule>
+        <FilesMatch ".+\.php$">
+            SetHandler application/x-httpd-php
+        </FilesMatch>
+
+        php_value include_path .
+        php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+        php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/php/php-php-gettext/:/usr/share/javascript/:/usr/share/php/tcpdf/:/usr/share/doc/phpmyadmin/:/usr/share/php/phpseclib/
+        php_admin_value mbstring.func_overload 0
+    </IfModule>
+
+</Directory>
+
+# Authorize for setup
+<Directory /usr/share/phpmyadmin/setup>
+    <IfModule mod_authz_core.c>
+        <IfModule mod_authn_file.c>
+            AuthType Basic
+            AuthName "phpMyAdmin Setup"
+            AuthUserFile /etc/phpmyadmin/htpasswd.setup
+        </IfModule>
+        Require valid-user
+    </IfModule>
+</Directory>
+
+# Disallow web access to directories that don't need it
+<Directory /usr/share/phpmyadmin/templates>
+    Require all denied
+</Directory>
+<Directory /usr/share/phpmyadmin/libraries>
+    Require all denied
+</Directory>
+<Directory /usr/share/phpmyadmin/setup/lib>
+    Require all denied
+</Directory>
+END
 sudo a2enconf phpmyadmin.conf >> /vagrant/build.log 2>&1
+
 
 echo "-- Installing PHPUnit --"
 sudo wget https://phar.phpunit.de/phpunit.phar
