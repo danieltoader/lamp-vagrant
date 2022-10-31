@@ -33,17 +33,17 @@ You'll need to have the following prerequisites **installed** on your workstatio
  * Curl
  
 ##### Included PHP packages
-  * php7.4-intl 
-  * php7.4-pdo 
-  * php7.4-zip
-  * php7.4-curl 
-  * php7.4-mysql 
-  * php7.4-mbstring 
-  * php7.4-xml
-  * php7.4-tokenizer 
-  * php7.4-gd
-  * php7.4-imagick
-  * php7.4-dev 
+  * php8.0-intl 
+  * php8.0-pdo 
+  * php8.0-zip
+  * php8.0-curl 
+  * php8.0-mysql 
+  * php8.0-mbstring 
+  * php8.0-xml
+  * php8.0-tokenizer 
+  * php8.0-gd
+  * php8.0-imagick
+  * php8.0-dev 
   * php-xdebug
 
 ## Quick Start
