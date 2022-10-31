@@ -1,6 +1,6 @@
 # LAMP for Vagrant
 Complete Vagrant LAMP setup for development environment. Start developing in less than 5 minutes.
-Development stack is based on Debian 11 (BullsEye) with Apache 2.4, PHP 7.4 and MySQL 5.7. 
+Development stack is based on Debian 11 (BullsEye) with Apache 2.4, PHP 8.1 and MySQL 5.7. 
 Composer is available for easy package management.
 
 ##### Table of Contents  
@@ -26,24 +26,24 @@ You'll need to have the following prerequisites **installed** on your workstatio
  * **Debian 11** (BullsEye)
  * **Apache 2.4**
  * **MySQL 5.7**
- * **PHP 7.4**
+ * **PHP 8.1**
  * **PhpMyAdmin**
  * Composer
  * Git
  * Curl
  
 ##### Included PHP packages
-  * php8.0-intl 
-  * php8.0-pdo 
-  * php8.0-zip
-  * php8.0-curl 
-  * php8.0-mysql 
-  * php8.0-mbstring 
-  * php8.0-xml
-  * php8.0-tokenizer 
-  * php8.0-gd
-  * php8.0-imagick
-  * php8.0-dev 
+  * php8.1-intl 
+  * php8.1-pdo 
+  * php8.1-zip
+  * php8.1-curl 
+  * php8.1-mysql 
+  * php8.1-mbstring 
+  * php8.1-xml
+  * php8.1-tokenizer 
+  * php8.1-gd
+  * php8.1-imagick
+  * php8.1-dev 
   * php-xdebug
 
 ## Quick Start
