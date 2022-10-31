@@ -107,7 +107,7 @@ sudo mysql -u root -p$mysql_root_pass -e "GRANT ALL PRIVILEGES ON $mysql_user_db
 sudo mysql -u root -p$mysql_root_pass -e "FLUSH PRIVILEGES;" >> /vagrant/build.log 2>&1
 
 echo "-- Installing PHP stuff --"
-sudo aptitude install -y libapache2-mod-php8.0 php8.0 php8.0-dev php8.0-pdo php8.0-mysql php8.0-mbstring php8.0-xml php8.0-intl php8.0-tokenizer php8.0-gd php8.0-imagick php8.0-curl php8.0-zip >> /vagrant/build.log 2>&1
+sudo aptitude install -y libapache2-mod-php8.1 php8.1 php8.1-dev php8.1-pdo php8.1-mysql php8.1-mbstring php8.1-xml php8.1-intl php8.1-tokenizer php8.1-gd php8.1-imagick php8.1-curl php8.1-zip >> /vagrant/build.log 2>&1
 
 echo "-- Installing Xdebug --"
 sudo aptitude install -y php-xdebug >> /vagrant/build.log 2>&1
