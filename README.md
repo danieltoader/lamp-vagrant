@@ -1,6 +1,6 @@
 # LAMP for Vagrant
 Complete Vagrant LAMP setup for development environment. Start developing in less than 5 minutes.
-Development stack is based on Debian 10 (Buster) with Apache 2.4, PHP 7.4 and MySQL 5.7. 
+Development stack is based on Debian 11 (BullsEye) with Apache 2.4, PHP 7.4 and MySQL 5.7. 
 Composer is available for easy package management.
 
 ##### Table of Contents  
@@ -23,7 +23,7 @@ You'll need to have the following prerequisites **installed** on your workstatio
     ```
 
 ## What is included?
- * **Debian 10** (Buster)
+ * **Debian 11** (BullsEye)
  * **Apache 2.4**
  * **MySQL 5.7**
  * **PHP 7.4**
@@ -125,8 +125,8 @@ As a consequence, you may mess up with the VM, do heavy testing, install new app
 
 ##### Install latest vagrant on Linux (Ubuntu/Debian)
 ```bash
-wget -c https://releases.hashicorp.com/vagrant/2.2.18/vagrant_2.2.18_x86_64.deb
-sudo dpkg -i vagrant_2.2.18_x86_64.deb
+wget -c https://releases.hashicorp.com/vagrant/2.3.2/vagrant_2.3.2-1_i686.deb
+sudo dpkg -i vagrant_2.3.2-1_i686.deb
 ```
 ##### For ssh access type
 ```bash
